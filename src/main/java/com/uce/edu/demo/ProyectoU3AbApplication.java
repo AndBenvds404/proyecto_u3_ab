@@ -9,6 +9,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import com.uce.edu.demo.repository.modelo.Habitacion;
 import com.uce.edu.demo.repository.modelo.Hotel;
 import com.uce.edu.demo.service.IHotelService;
 
@@ -28,32 +29,45 @@ public class ProyectoU3AbApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		// TODO Auto-generated method stub
 		
-		LOG.info("INNER JOIN");
-		List<Hotel> listaHotelesInnerJoin = this.iHotelService.buscarHotelInnerJoin("familiar");
-		for (Hotel h: listaHotelesInnerJoin) {
-			LOG.info("Hotel Inner Join:"+ h);
+	
+		
+//		LOG.info("Relacionamiento WHERE");
+//		List<Hotel> listaHotelesJoinWhere = this.iHotelService.buscarHotelJoinWhere("familiar");
+//		for (Hotel h: listaHotelesJoinWhere) {
+//			LOG.info("Hotel Inner Join:"+ h.getNombre()+ " " +h.getDireccion());
+//		}
+		
+		
+		LOG.info("INNER JOIN EAGER/LAZY");
+		List<Hotel> listaHoteles2 = this.iHotelService.buscarHotelInnerJoin("familiar");
+		for (Hotel h: listaHoteles2) {
+			LOG.info("Hotel2:"+ h.getNombre()+ " " +h.getDireccion());
+			for (Habitacion ha : h.getHabitaciones()) {
+				LOG.info("Hotel2 Habitaciones:"+ha);
+			}
+			
 		}
-//		List<Hotel> listaHotelesInnerJoin2 = this.iHotelService.buscarHotelInnerJoin();
-//		for (Hotel h: listaHotelesInnerJoin2) {
-//			LOG.info("Hotel Inner Join:"+ h);
-//		}
-//		
-		
-//		LOG.info("LEFT JOIN");
-//		List<Hotel> listaHotelesIOuterJoinLeft =this.iHotelService.buscarHotelIOuterJoinLeft("familiar");
-//		for (Hotel h: listaHotelesIOuterJoinLeft) {
-//			LOG.info("Hotel Left:"+ h);
-//		}
-//		List<Hotel> listaHotelesIOuterJoinLeft2 =this.iHotelService.buscarHotelIOuterJoinLeft();
-//		for (Hotel h: listaHotelesIOuterJoinLeft2) {
-//			LOG.info("Hotel Left:"+ h);
-//		}		
 		
 		
-//		List<Hotel> listaHotelesIOuterJoinRight =this.iHotelService.buscarHotelIOuterJoinRight("familiar");
-//		for (Hotel h: listaHotelesIOuterJoinRight) {
-//			LOG.info("Hotel Right:"+ h);
-//		}
+		LOG.info("Join Fetch");
+		List<Hotel> listaHoteles3 = this.iHotelService.buscarHotelJoinFetch("familiar");
+		for (Hotel h: listaHoteles3) {
+			LOG.info("Hotel3:"+ h.getNombre()+ " " +h.getDireccion());
+			for (Habitacion ha : h.getHabitaciones()) {
+				LOG.info("Hotel3 Habitaciones:"+ ha);
+			}
+			
+
+		}
+		
+		
+	
+		
+		
+		
+		
+		
+		
 	}
 
 }

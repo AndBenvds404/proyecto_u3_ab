@@ -2,8 +2,10 @@ package com.uce.edu.demo.repository.modelo;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,6 +20,7 @@ public class Hotel {
 	@Id
 	@Column(name = "hote_id")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "hote_id_seq") // nombre (original/referencia) del																				// secuencia de la db
+	
 	@SequenceGenerator(name = "hote_id_seq", sequenceName = "hote_id_seq", allocationSize = 1) // nombre dela secuecia	
 
 	private Integer id;
@@ -28,12 +31,14 @@ public class Hotel {
 	@Column(name = "hote_direccion")
 	private String direccion;
 	
-	@OneToMany(mappedBy = "hotelr")
+//	@OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, fetch = FetchType.EAGER) // carga por defecto pero muy pesado
+	@OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, fetch = FetchType.LAZY) // carga perezosa
 	private List<Habitacion> habitaciones;
 
+	
 	@Override
 	public String toString() {
-		return "Hotel [id=" + id + ", nombre=" + nombre + ", direccion=" + direccion + ", habitaciones=" + habitaciones
+		return "Hotel [id=" + id + ", nombre=" + nombre + ", direccion=" + direccion 
 				+ "]";
 	}
 

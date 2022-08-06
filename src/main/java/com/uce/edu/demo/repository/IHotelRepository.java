@@ -12,5 +12,7 @@ public interface IHotelRepository {
 	public List<Hotel> buscarHotelIOuterJoinLeft(String tipoHabitacion);
 	public List<Hotel> buscarHotelIOuterJoinLeft( );
 	public List<Hotel> buscarHotelIOuterJoinRight(String tipoHabitacion);
+	public List<Hotel> buscarHotelJoinWhere(String tipoHabitacion);	
+	public List<Hotel> buscarHotelJoinFetch(String tipoHabitacion);
 	
 }
