@@ -21,7 +21,7 @@ public class ProveedorRepositoryImpl implements IProveedorRepository{
 	@Override
 	public List<Proveedor> buscarProveedorInnerJoin(Integer cantidad) {
 		// TODO Auto-generated method stub
-		TypedQuery<Proveedor> myQuery = this.entityManager.createQuery("SELECT p FROM Proveedor p JOIN p.productos pr WHERE pr.cantidad =: datoCantidad",Proveedor.class); // h.la relacion mapeada del modelo
+		TypedQuery<Proveedor> myQuery = this.entityManager.createQuery("SELECT p FROM Proveedor p JOIN p.productos pr WHERE pr.cantidad =: datoCantidad",Proveedor.class); 
 		myQuery.setParameter("datoCantidad", cantidad);
 		return myQuery.getResultList();
 	}
@@ -29,7 +29,7 @@ public class ProveedorRepositoryImpl implements IProveedorRepository{
 	@Override
 	public List<Proveedor> buscarProveedorOuterJoinLeft(Integer cantidad) {
 		// TODO Auto-generated method stub
-		TypedQuery<Proveedor> myQuery = this.entityManager.createQuery("SELECT p FROM Proveedor p LEFT JOIN p.productos pr WHERE pr.cantidad =: datoCantidad",Proveedor.class); // h.la relacion mapeada del modelo
+		TypedQuery<Proveedor> myQuery = this.entityManager.createQuery("SELECT p FROM Proveedor p LEFT JOIN p.productos pr WHERE pr.cantidad =: datoCantidad",Proveedor.class); 
 		myQuery.setParameter("datoCantidad", cantidad);
 		return myQuery.getResultList();
 	}
@@ -37,7 +37,7 @@ public class ProveedorRepositoryImpl implements IProveedorRepository{
 	@Override
 	public List<Proveedor> buscarProveedorOuterJoinRight(Integer cantidad) {
 		// TODO Auto-generated method stub
-		TypedQuery<Proveedor> myQuery = this.entityManager.createQuery("SELECT p FROM Proveedor p RIGHT JOIN p.productos pr WHERE pr.cantidad =: datoCantidad",Proveedor.class); // h.la relacion mapeada del modelo
+		TypedQuery<Proveedor> myQuery = this.entityManager.createQuery("SELECT p FROM Proveedor p RIGHT JOIN p.productos pr WHERE pr.cantidad =: datoCantidad",Proveedor.class); 
 		myQuery.setParameter("datoCantidad", cantidad);
 		return myQuery.getResultList();
 	}
@@ -45,13 +45,17 @@ public class ProveedorRepositoryImpl implements IProveedorRepository{
 	@Override
 	public List<Proveedor> buscarProveedorJoinWhere(Integer cantidad) {
 		// TODO Auto-generated method stub
-		return null;
+		TypedQuery<Proveedor> myQuery = this.entityManager.createQuery("SELECT p FROM Proveedor p, Producto pr WHERE p = pr.proveedor and pr.cantidad =: datoCantidad ",Proveedor.class); 
+		myQuery.setParameter("datoCantidad", cantidad);
+		return myQuery.getResultList();
 	}
 
 	@Override
 	public List<Proveedor> buscarProveedorJoinFetch(Integer cantidad) {
 		// TODO Auto-generated method stub
-		return null;
+		TypedQuery<Proveedor> myQuery = this.entityManager.createQuery("SELECT p FROM Proveedor p JOIN FETCH p.productos pr WHERE pr.cantidad =: datoCantidad",Proveedor.class); 
+		myQuery.setParameter("datoCantidad", cantidad);
+		return myQuery.getResultList();
 	}
 	
 	

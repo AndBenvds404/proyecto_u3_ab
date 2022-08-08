@@ -9,8 +9,11 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import com.uce.edu.demo.repository.libreria.modelo.Producto;
 import com.uce.edu.demo.repository.libreria.modelo.Proveedor;
 import com.uce.edu.demo.repository.libreria.service.IProveedorService;
+import com.uce.edu.demo.repository.modelo.Habitacion;
+import com.uce.edu.demo.repository.modelo.Hotel;
 
 @SpringBootApplication
 public class ProyectoU3AbApplication implements CommandLineRunner {
@@ -29,24 +32,25 @@ public class ProyectoU3AbApplication implements CommandLineRunner {
 		// TODO Auto-generated method stub
 		
 		
-		LOG.info("INNER JOIN");
-		List<Proveedor> listaProveedor = this.iProveedorService.buscarProveedorInnerJoin(10);
-		for (Proveedor p: listaProveedor) {
-			LOG.info("Proveedores:"+ p);
+
+		
+		
+		LOG.info("RELACIONAMIENTO WHERE");
+		List<Proveedor> listaProveedores = this.iProveedorService.buscarProveedorJoinWhere(10);
+		for (Proveedor p: listaProveedores) {
+			LOG.info("Proveedor :"+ p.getNombre()+ " " +p.getEmail());
 		}
 		
-		LOG.info("OUTER  LEFT JOIN");
-		List<Proveedor> listaProveedor2 = this.iProveedorService.buscarProveedorOuterJoinLeft(10);
-		for (Proveedor p2: listaProveedor2) {
-			LOG.info("Proveedores:"+ p2);
-		}
 		
-		LOG.info("OUTER RIGHT JOIN");
-		List<Proveedor> listaProveedor3 = this.iProveedorService.buscarProveedorOuterJoinRight(10);
-		for (Proveedor p3: listaProveedor3) {
-			LOG.info("Proveedores:"+ p3);
+		LOG.info("Join Fetch");
+		List<Proveedor> listaProveedores2 = this.iProveedorService.buscarProveedorJoinFetch(10);
+		for (Proveedor p: listaProveedores2) {
+			LOG.info("Proveedores:"+ p.getNombre()+ " " +p.getEmail());
+			for (Producto pr : p.getProductos()) {
+				LOG.info("Proveedor Productos:"+pr);
+			}
+			
 		}
-		
 
 		
 		

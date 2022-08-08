@@ -35,13 +35,13 @@ public class ProveedorServiceImpl implements IProveedorService{
 	@Override
 	public List<Proveedor> buscarProveedorJoinWhere(Integer cantidad) {
 		// TODO Auto-generated method stub
-		return null;
+		return this.iProveedorRepository.buscarProveedorJoinWhere(cantidad);
 	}
 
 	@Override
 	public List<Proveedor> buscarProveedorJoinFetch(Integer cantidad) {
 		// TODO Auto-generated method stub
-		return null;
+		return this.iProveedorRepository.buscarProveedorJoinFetch(cantidad);
 	}
 	
 
