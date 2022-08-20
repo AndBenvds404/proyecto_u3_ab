@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -32,10 +33,10 @@ public class CuentaBancaria {
 	@Column(name = "cuba_tipo")
 	private String tipo;
 	
-	@OneToMany(mappedBy = "cuentaOrigen")
+	@OneToMany(mappedBy = "cuentaOrigen", fetch = FetchType.LAZY)
 	private List<Transferencia > tranferenciasOrigen;
 	
-	@OneToMany(mappedBy = "cuentaDestino")
+	@OneToMany(mappedBy = "cuentaDestino", fetch =  FetchType.LAZY)
 	private List<Transferencia > tranferenciasDestino;
 
 	

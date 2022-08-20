@@ -1,7 +1,6 @@
 package com.uce.edu.demo;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -10,12 +9,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import com.uce.edu.demo.repository.IHotelRepository;
-import com.uce.edu.demo.repository.libreria.modelo.Producto;
-import com.uce.edu.demo.repository.libreria.modelo.Proveedor;
-import com.uce.edu.demo.repository.libreria.service.IProveedorService;
-import com.uce.edu.demo.repository.modelo.Habitacion;
-import com.uce.edu.demo.repository.modelo.Hotel;
 import com.uce.edu.demo.service.IHotelService;
 import com.uce.edu.demo.service.ITransferenciaService;
 
@@ -24,9 +17,6 @@ public class ProyectoU3AbApplication implements CommandLineRunner {
 	
 	Logger LOG = LogManager.getLogger(LogManager.ROOT_LOGGER_NAME);
 	
-
-	@Autowired
-	private IHotelService iHotelService;
 	
 	@Autowired
 	private ITransferenciaService iTransferenciaService;
@@ -41,7 +31,7 @@ public class ProyectoU3AbApplication implements CommandLineRunner {
 		
 				
 		
-		this.iTransferenciaService.realizarTransferencia("54321", "12345", new BigDecimal(5));
+		this.iTransferenciaService.realizarTransferencia("00021", "54321", "12345", new BigDecimal(1));
 
 
 

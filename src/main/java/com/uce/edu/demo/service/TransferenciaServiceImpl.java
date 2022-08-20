@@ -17,50 +17,59 @@ import com.uce.edu.demo.repository.modelo.Transferencia;
 public class TransferenciaServiceImpl  implements ITransferenciaService{
 
 	@Autowired
-	private ICuentaBancariaRepository iBancariaRepository;
+	private ICuentaBancariaRepository cuentaBancariaRepository;
 	
 	@Autowired
-	private ITransferenciaRepository iTransferenciaRepository;
-	
+	private ITransferenciaRepository transferenciaRepository;
 	
 	
 	@Override
-	@Transactional(value = TxType.REQUIRES_NEW)
-	public void realizarTransferencia(String numeroCtaOrigen, String numeroCtaDestino, BigDecimal monto) {
+	@Transactional(value = TxType.REQUIRED) //begin
+	public void realizarTransferencia(String numero, String numeroCuentaOrigen, String numeroCuentaDestino, BigDecimal monto) {
 		// TODO Auto-generated method stub
 		
-		//busqueda de ct aorigen(obtner saldo)
-		CuentaBancaria ctaOrigen = this.iBancariaRepository.buscarPorNumero(numeroCtaOrigen);
-		//1. restar el monto  la cuenta origen
-		BigDecimal saldoOrigen= ctaOrigen.getSaldo();
-		BigDecimal saldoFinal = saldoOrigen.subtract(monto);
-		ctaOrigen.setSaldo(saldoFinal);
-		this.iBancariaRepository.actualizar(ctaOrigen);
-		
-		
-		//0. busqeda de lacta Destino (obtener el saldo)
-		CuentaBancaria ctaDestino = this.iBancariaRepository.buscarPorNumero(numeroCtaDestino);
-		//2. Sumar el monto de la cta Destino
-		ctaDestino.setSaldo(ctaDestino.getSaldo().add(monto));
-		this.iBancariaRepository.actualizar(ctaDestino);
-		//3. insertar transferencia
-		Transferencia trans = new Transferencia();
-		trans.setFecha(LocalDateTime.now());
-		trans.setMonto(monto);
-		trans.setCuentaOrigen(ctaOrigen);
-		trans.setCuentaDestino(ctaDestino);
-		this.iTransferenciaRepository.insertar(trans);
-		
-		
-		
-	}
+		//0.
+				CuentaBancaria ctaOrigen = this.cuentaBancariaRepository.buscarPorNumero(numeroCuentaOrigen);
+				CuentaBancaria ctaDestino = this.cuentaBancariaRepository.buscarPorNumero(numeroCuentaDestino);
+				BigDecimal saldoOrigen = ctaOrigen.getSaldo();
+				BigDecimal saldoDestino=  ctaDestino.getSaldo();
+				
+				//1. 
+				ctaOrigen.setSaldo(ctaOrigen.getSaldo().subtract(monto));
+				this.cuentaBancariaRepository.actualizar(ctaOrigen);
+				//2.
+				ctaDestino.setSaldo(ctaDestino.getSaldo().add(monto));
+				this.cuentaBancariaRepository.actualizar(ctaDestino);
+				
+				//3.
+				Transferencia transferencia = new Transferencia();
+				transferencia.setCuentaOrigen(ctaOrigen);
+				transferencia.setCuentaDestino(ctaDestino);
+				transferencia.setFecha(LocalDateTime.now());
+				transferencia.setNumero(numero);
+				transferencia.setMonto(monto);
+				//id es secuencia desde la base de datos
+				this.transferenciaRepository.insertar(transferencia);
+					
+//				if(ctaOrigen.getTipo().equals("Ahorros")){
+//					throw new RuntimeException();
+//				}
+				
+				if(monto.compareTo(saldoOrigen)>0) {
+					throw new RuntimeException();
+				}
+
+				
+	}//commit
 	
-	@Override
-	@Transactional(value = TxType.REQUIRED)
-	public void realizarTransferenciaFachada(String ctaOrigen, String ctaDestino, BigDecimal monto) {
-		// TODO Auto-generated method stub
-		this.realizarTransferencia(ctaOrigen, ctaDestino, monto);
-		
-	}
+	
+	
+//	@Override
+//	@Transactional(value = TxType.REQUIRED)
+//	public void realizarTransferenciaFachada(String ctaOrigen, String ctaDestino, BigDecimal monto) {
+//		// TODO Auto-generated method stub
+//		this.realizarTransferencia(ctaOrigen, ctaDestino, monto);
+//		
+//	}
 	
 }

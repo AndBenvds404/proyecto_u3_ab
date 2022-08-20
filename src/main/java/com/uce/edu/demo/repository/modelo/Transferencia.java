@@ -23,6 +23,9 @@ public class Transferencia {
 	@SequenceGenerator(name = "tran_id_seq", sequenceName = "tran_id_seq", allocationSize = 1)
 	private Integer id;
 	
+	@Column(name = "tran_numero")
+	private String numero;
+	
 	@Column(name = "tran_fecha")
 	private LocalDateTime fecha;
 	
@@ -38,7 +41,11 @@ public class Transferencia {
 	private CuentaBancaria cuentaDestino;
 
 	
-	
+	@Override
+	public String toString() {
+		return "Transferencia [id=" + id + ", fecha=" + fecha + ", monto=" + monto + ", cuentaDestino=" + cuentaDestino
+				+ ", cuentaOrigen=" + cuentaOrigen + "]";
+	}
 	
 	public Integer getId() {
 		return id;
@@ -46,6 +53,13 @@ public class Transferencia {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+	
+	public String getNumero() {
+		return numero;
+	}
+	public void setNumero(String numero) {
+		this.numero = numero;
 	}
 
 	public LocalDateTime getFecha() {

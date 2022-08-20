@@ -16,16 +16,18 @@ import com.uce.edu.demo.repository.modelo.CuentaBancaria;
 @Transactional
 public class CuentaBancariaRepositoryImpl implements ICuentaBancariaRepository{
 	
-	Logger LOG = LogManager.getLogger(LogManager.ROOT_LOGGER_NAME);
+	
+	private static final Logger LOG = LogManager.getLogger(CuentaBancariaRepositoryImpl.class);
 	
 	@PersistenceContext
 	private EntityManager entityManager;
 	
 	@Override
-	@Transactional(value = TxType.MANDATORY)
+	@Transactional(value = TxType.REQUIRES_NEW)
 	public void actualizar(CuentaBancaria cuentaBancaria) {
 		// TODO Auto-generated method stub
 		this.entityManager.merge(cuentaBancaria);
+		//throw new RuntimeException();
 		
 	}
 	
