@@ -13,8 +13,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-@Entity
-@Table(name = "proveedor")
+//@Entity
+//@Table(name = "proveedor")
 public class Proveedor {	
 	
 	@Id

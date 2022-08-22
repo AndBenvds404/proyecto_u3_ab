@@ -48,6 +48,7 @@ public class TransferenciaServiceImpl  implements ITransferenciaService{
 				transferencia.setFecha(LocalDateTime.now());
 				transferencia.setNumero(numero);
 				transferencia.setMonto(monto);
+				
 				//id es secuencia desde la base de datos
 				this.transferenciaRepository.insertar(transferencia);
 					
