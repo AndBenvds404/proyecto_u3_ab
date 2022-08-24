@@ -10,6 +10,7 @@ public class MainInterfacesFuncionales {
 	public static void main(String[] args)  {
 		// TODO Auto-generated method stub
 	
+		ConsumoMetodosHighOrder metodosHO = new ConsumoMetodosHighOrder();
 		
 	//SUPPLIER
 		//CLases 
@@ -26,6 +27,14 @@ public class MainInterfacesFuncionales {
 		IPersonaSupplier<String> supplierLambdaTE = () -> "Franchesco TE2";
 		log.info("Supplier lambda: "+ supplierLambdaTE.getNombre());
 		 
+		//Metodos high Order 
+		String valorHO = metodosHO.consumirSupplier(()->{
+			String valorConsultado = "1727";
+			return valorConsultado;
+			});
+		log.info("HO supplier "+ valorHO);
+		
+		
 		
 	//CONSUMER
 		//CLases 
@@ -35,20 +44,56 @@ public class MainInterfacesFuncionales {
 		IPersonaConsumer<String> consumerLambda = cadena-> System.out.println(cadena);
 		consumerLambda.accept("Prueba Consumer Lambda");
 		
+		//metood High Order
+		metodosHO.consumirConsumer(valor-> System.out.println(valor), 2);
+		
+		
 		
 	//PREDICATE
 		//CLases 
 		//Lambdas
+		IPersonaPredicate<String> predicateLambda = cadena -> cadena.contains("z");
+		log.info( predicateLambda.evaluar("Franchesco"));
 		
+		//metood High Order
+		boolean respuesta = metodosHO.consumirPredicate(cadena -> cadena.contains("z"), "Franchesco");//comparamos la cadena que contenga z con "el string"
+		log.info("HO Predicate:" + respuesta);
+		
+	
 		
 	//FUNCTION
 		//CLases 
 		//Lambdas
+		IPersonaFunction<Integer, String> functionLambda = cadena -> { 
+			Integer valor = Integer.parseInt(cadena);
+			Integer valorfinal = valor -2;
+			return  valorfinal;
+		};
+		log.info("Prdicate Lambdas: "+functionLambda.aplicar("7"));
 		
+		//metood High Order
 		
-		//UNARY OPERATOR (FUNCTION)
+		String valorfinalHO =metodosHO.consumirFunction(valor-> {
+			//Aqui podemos colocar mucha logica de programacion
+			String retorn  = valor.toString()+"A";
+			return retorn;
+		}, 1);
+		log.info("HO function:"+ valorfinalHO );
+		
+	//UNARY OPERATOR (FUNCTION)
 		//CLases 
 		//Lambdas
+		
+		IPersonaUnaryOperator<String> unaryLambda = cade ->{
+			String valorFinal = cade.concat("sufijo");
+			return valorFinal;
+		};
+		log.info("Prdicate Lambdas: "+unaryLambda.apply("Daniel"));
+		
+		
+		
+		
+		
 		
 	}
 
