@@ -2,10 +2,9 @@ package com.uce.edu.demo.service.funcional;
 
 import org.apache.log4j.Logger;
 
-import com.uce.edu.demo.ProyectoU3AbApplication;
 public class MainInterfacesFuncionales {
 	
-	private static Logger log = Logger.getLogger(ProyectoU3AbApplication.class);
+	private static Logger log = Logger.getLogger(MainInterfacesFuncionales.class);
 
 	public static void main(String[] args)  {
 		// TODO Auto-generated method stub

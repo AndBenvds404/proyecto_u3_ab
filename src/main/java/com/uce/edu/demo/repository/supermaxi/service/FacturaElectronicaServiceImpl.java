@@ -23,25 +23,31 @@ public class FacturaElectronicaServiceImpl implements IFacturaElectronicaService
 	@Transactional(value = TxType.REQUIRES_NEW)
 	public void insertar(FacturaElectronica facturaElectronica) {
 		// TODO Auto-generated method stub
-		this.iFacturaElectronicaRepository.insertar(facturaElectronica);
+	
 	}
 	
+
+
+	@Override
+	@Transactional(value = TxType.REQUIRES_NEW)
+	public void procesarElectronica(String numeroFactura, Integer cantidadItems, BigDecimal monto) {
+		// TODO Auto-generated method stub
+		FacturaElectronica facturaElectronica = new FacturaElectronica();
+		facturaElectronica.setNumero(numeroFactura);
+		facturaElectronica.setFechaCreacion(LocalDateTime.now());
+		facturaElectronica.setNumeroDetalles(cantidadItems);
+		facturaElectronica.setMonto(monto);
+		this.iFacturaElectronicaRepository.insertar(facturaElectronica);
+		throw new RuntimeException();
+
+	}
+
+
+
 	@Override
 	public void crearFacturaSRI(Factura factura) {
 		// TODO Auto-generated method stub
-		FacturaElectronica facturaElectronica = new FacturaElectronica();
-		facturaElectronica.setNumero(factura.getNumero());
-		facturaElectronica.setFechaCreacion(LocalDateTime.now());
-		facturaElectronica.setNumeroDetalles(factura.getDetallers().size());
-
-		BigDecimal monto = new BigDecimal(0);
-
-		for (DetalleFactura detalle : factura.getDetallers())
-			monto = monto.add(detalle.getSubtotal());
-
-		facturaElectronica.setMonto(monto);
-
-		this.insertar(facturaElectronica);
+		
 	}
 	
 	

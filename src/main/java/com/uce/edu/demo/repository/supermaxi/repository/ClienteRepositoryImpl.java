@@ -4,6 +4,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
+import javax.transaction.Transactional.TxType;
 
 import org.springframework.stereotype.Repository;
 
@@ -16,6 +17,7 @@ public class ClienteRepositoryImpl implements IClienteRepository {
 	private EntityManager entityManager;
 	
 	@Override
+	@Transactional(value = TxType.NOT_SUPPORTED)
 	public Cliente buscar(String cedula) {
 		// TODO Auto-generated method stub
 		TypedQuery< Cliente> myQuery = this.entityManager.createQuery("SELECT c FROM Cliente c WHERE c.cedula =: datoCedula",Cliente.class);

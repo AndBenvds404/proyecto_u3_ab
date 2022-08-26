@@ -1,6 +1,5 @@
 package com.uce.edu.demo.repository;
 
-import javax.management.RuntimeErrorException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;

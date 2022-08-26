@@ -6,10 +6,7 @@ import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import javax.transaction.Transactional.TxType;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 import com.uce.edu.demo.repository.modelo.CuentaBancaria;
 @Repository
@@ -17,7 +14,7 @@ import com.uce.edu.demo.repository.modelo.CuentaBancaria;
 public class CuentaBancariaRepositoryImpl implements ICuentaBancariaRepository{
 	
 	
-	private static final Logger LOG = LogManager.getLogger(CuentaBancariaRepositoryImpl.class);
+	//private static Logger LOG = Logger.getLogger(CuentaBancariaRepositoryImpl.class);
 	
 	@PersistenceContext
 	private EntityManager entityManager;
@@ -35,7 +32,7 @@ public class CuentaBancariaRepositoryImpl implements ICuentaBancariaRepository{
 	@Transactional(value = TxType.NOT_SUPPORTED)
 	public CuentaBancaria buscarPorNumero(String numeroCta) {
 		// TODO Auto-generated method stub
-		LOG.info("transaccion buscar por numero: "+ TransactionSynchronizationManager.isActualTransactionActive());
+		//LOG.info("transaccion buscar por numero: "+ TransactionSynchronizationManager.isActualTransactionActive());
 		TypedQuery<CuentaBancaria> myQuery = this.entityManager.createQuery("SELECT c FROM CuentaBancaria c WHERE c.numero=: datoNumeroCta ",CuentaBancaria.class);
 		myQuery.setParameter("datoNumeroCta", numeroCta);
 		return myQuery.getSingleResult();

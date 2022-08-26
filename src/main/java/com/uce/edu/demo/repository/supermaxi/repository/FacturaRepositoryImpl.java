@@ -16,7 +16,7 @@ public class FacturaRepositoryImpl implements IFacturaRepository {
 	private EntityManager entityManager;
 	
 	@Override
-	@Transactional(value=TxType.MANDATORY)
+	@Transactional(value=TxType.REQUIRED)
 	public void insertar(Factura factura) {
 		// TODO Auto-generated method stub
 		this.entityManager.persist(factura);

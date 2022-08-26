@@ -1,5 +1,6 @@
 package com.uce.edu.demo.repository.supermaxi.service;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,8 +8,6 @@ import java.util.List;
 import javax.transaction.Transactional;
 import javax.transaction.Transactional.TxType;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,13 +16,11 @@ import com.uce.edu.demo.repository.supermaxi.modelo.DetalleFactura;
 import com.uce.edu.demo.repository.supermaxi.modelo.Factura;
 import com.uce.edu.demo.repository.supermaxi.modelo.Producto;
 import com.uce.edu.demo.repository.supermaxi.repository.IClienteRepository;
-import com.uce.edu.demo.repository.supermaxi.repository.IDetalleFacturaRepository;
 import com.uce.edu.demo.repository.supermaxi.repository.IFacturaRepository;
 import com.uce.edu.demo.repository.supermaxi.repository.IProductoRepository;
 @Service
 public class FacturaServiceImpl implements IFacturaService {
 	
-	Logger LOG = LogManager.getLogger(LogManager.ROOT_LOGGER_NAME);
 	
 	@Autowired
 	private IProductoRepository iProductoRepository;
@@ -34,15 +31,13 @@ public class FacturaServiceImpl implements IFacturaService {
 	@Autowired
 	private IClienteRepository iClienteRepository;
 	
-	@Autowired
-	private IDetalleFacturaRepository iDetalleFacturaRepository;
 	
 	
 	@Override
-	@Transactional(value = TxType.REQUIRED)
-	public void compraProducto(String cedula, String numerofactura, List<String> codigoBarras) {
+	@Transactional(value = TxType.REQUIRES_NEW)
+	public BigDecimal procesarFactura(String cedula, String numerofactura, List<String> codigoBarras) {
 		// TODO Auto-generated method stub
-		
+		BigDecimal totalPagar = BigDecimal.ZERO;
 		Cliente cliente = this.iClienteRepository.buscar(cedula);
 				
 		Factura fact = new Factura();
@@ -53,6 +48,7 @@ public class FacturaServiceImpl implements IFacturaService {
 		this.iFacturaRepository.insertar(fact);
 		
 		List<DetalleFactura> detalles = new ArrayList<DetalleFactura>();
+		
 		for (String codigoProducto : codigoBarras) {
 			
 			DetalleFactura detalle = new DetalleFactura();
@@ -60,23 +56,17 @@ public class FacturaServiceImpl implements IFacturaService {
 			detalle.setFactura(fact);
 			Producto producto = this.iProductoRepository.buscarCodigoBarras(codigoProducto);
 			detalle.setProducto(producto);
-			
-			producto.setStock(producto.getStock()-1);
-			
-			if (producto.getStock()>0) {
-				
-				detalle.setSubtotal(producto.getPrecio());//ojo
-				detalles.add(detalle);
-				
-				this.iDetalleFacturaRepository.insertar(detalle);
-				this.iProductoRepository.actualizar(producto);
-				
-			}else {
-				LOG.error("Stock insuficiente: "+ producto.getNombre());
-			}
-				
+			detalle.setSubtotal(detalle.getProducto().getPrecio());
+			totalPagar.add(detalle.getSubtotal());
+			producto.setStock(producto.getStock()-detalle.getCantidad());
+			this.iProductoRepository.actualizar(producto);
+			detalles.add(detalle);
 		}
 		fact.setDetallers(detalles);
+		this.iFacturaRepository.insertar(fact);
+		return totalPagar;
+			
+	
 	}
 
 }

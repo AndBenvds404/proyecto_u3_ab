@@ -25,7 +25,7 @@ public class ProductoRepositoryImpl implements IProductoRepository {
 	}
 
 	@Override
-	@Transactional(value = TxType.REQUIRED)
+	@Transactional(value = TxType.NOT_SUPPORTED)
 	public Producto buscarCodigoBarras (String codigoBarras) {
 		// TODO Auto-generated method stub
 		TypedQuery<Producto> myQuery = this.entityManager.createQuery("SELECT p FROM producto p WHERE p.codigoBarras =: datoCodigoBarras", Producto.class);
