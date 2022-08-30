@@ -67,7 +67,7 @@ public class MainInterfacesFuncionalesTarea33 {
 		log.info("Fuction");
 		//CLases 
 		IEstudianteFunction<Boolean, Integer> functionClase= new EstudianteFunctionImpl();
-		log.info("Clase: numero es distinto de 0: "+ functionClase.aplicar(15));
+		log.info("Clase: numero de materias es distinto de 0: "+ functionClase.aplicar(15));
 		
 		//Lambdas
 		IEstudianteFunction<Boolean, Integer> functionLambda = cadena -> { 
@@ -76,12 +76,12 @@ public class MainInterfacesFuncionalesTarea33 {
 			return  evalua;
 		};
 		Integer numeros = 1234;
-		log.info("Lambdas: "+numeros+" contiene el numero 1: "+functionLambda.aplicar(numeros));
+		log.info("Lambdas: "+numeros+" contiene el numero 1 materia de primer semestre: "+functionLambda.aplicar(numeros));
 		
 		//metood High Order
 		String valorfinalHO =metodosHO.consumirFunction(valor-> {
 			//Aqui podemos colocar mucha logica de programacion
-			String retorn  = valor.toString()+" IVA";
+			String retorn  = valor.toString()+" Valor matricula";
 			return retorn;
 		}, 430.0);
 		log.info("High Order: " + valorfinalHO );
@@ -93,23 +93,23 @@ public class MainInterfacesFuncionalesTarea33 {
 		log.info("Clase: Asignar cargo "+ unaryOperatorClase.apply("Sebastian"));
 		//Lambdas
 		
-		IEstudianteUnaryOperator<Double> unaryLambda = monto ->{
-			Double ingreso =  (monto*(0.18*60/365));
-			Double montoFinal = ingreso+monto;
+		IEstudianteUnaryOperator<Double> unaryLambda = creditos ->{
+			Double ingreso =  (creditos*(0.18*60/365));
+			Double montoFinal = ingreso+creditos;
 			return montoFinal;
 		};
-		log.info("Lambdas: Ingresos Plazo fijo 60 dias, con taza interes de 18%: "+unaryLambda.apply(5740.50));
+		log.info("Lambdas: Valor por credito: "+unaryLambda.apply(6.50));
 		
 		//metood High Order
 		
-		BigDecimal interesCompuesto = metodosHO.consumirUnaryOperator(monto-> {
-			Integer anios= 3;
+		BigDecimal horasClase = metodosHO.consumirUnaryOperator(monto-> {
+			Integer anios= 5;
 			BigDecimal calculo =  new BigDecimal(1).subtract(new BigDecimal(2).divide(new BigDecimal(100)));
 			BigDecimal totalFinal =monto.add( monto.multiply(calculo.pow(anios)));
 			return totalFinal;
-		}, new BigDecimal(12000));
+		}, new BigDecimal(300));
 		
-		log.info("High Order: Interes Compuesto :" +interesCompuesto);
+		log.info("High Order: Horas clase semestre: " +horasClase);
 		
 	}
 

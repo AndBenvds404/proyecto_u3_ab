@@ -5,7 +5,7 @@ public class EstudianteUnaryOperatorImpl implements IEstudianteUnaryOperator<Str
 	@Override
 	public String apply(String arg1) {
 		// TODO Auto-generated method stub
-		arg1.concat(" Empleado");
+		arg1.concat(" Estudiante");
 		return arg1;
 	}
 
