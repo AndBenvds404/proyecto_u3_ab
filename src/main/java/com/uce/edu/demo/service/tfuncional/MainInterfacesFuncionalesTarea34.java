@@ -1,16 +1,22 @@
 package com.uce.edu.demo.service.tfuncional;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Stream;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class MainInterfacesFuncionalesTarea33 {
+public class MainInterfacesFuncionalesTarea34 {
 	
+	private static final Logger log = LoggerFactory.getLogger(MainInterfacesFuncionalesTarea34.class);
 
-		
-	private static final Logger log = LoggerFactory.getLogger(MainInterfacesFuncionalesTarea33.class);
-
+	public static void imprimir(String nombre) {
+		System.out.println(nombre);
+	}
+	
+	
 	public static void main(String[] args)  {
 		// TODO Auto-generated method stub
 	
@@ -32,7 +38,11 @@ public class MainInterfacesFuncionalesTarea33 {
 			return valorConsultado;
 			});
 		log.info("HO supplier "+ valorHO);
-		
+		///JAVA
+		List<Integer> a = Arrays.asList(1,2,3,3);
+		log.info("JAVA supplier ");
+		Stream<List<Integer>> testStream = Stream.generate(()-> a ).limit(5);
+		testStream.forEach(cadena->System.out.println(cadena));
 		
 		
 	//CONSUMER
@@ -43,10 +53,12 @@ public class MainInterfacesFuncionalesTarea33 {
 		//Lambdas
 		IEstudianteConsumer<Integer> consumerLambda = cadena-> System.out.println(cadena+" dato procesado");
 		consumerLambda.accept(1727094851);
-		
 		//metood High Order
 		metodosHO.consumirConsumer(valor-> System.out.println("valor procesado: "+valor), 12);
-		
+		//JAVA
+		log.info("JAVA Consumer ");
+		List<String> listaNombre = Arrays.asList("Mike","Anais","Rómulo");
+		listaNombre.forEach(nombre-> imprimir(nombre));
 		
 		
 	//PREDICATE
@@ -58,9 +70,13 @@ public class MainInterfacesFuncionalesTarea33 {
 		IEstudiantePredicate<String> predicateLambda = cadena4 -> cadena4.startsWith("A");
 		log.info("Predicate: La cadena empieza con A: "+ predicateLambda.evaluar("Andres"));
 		//metood High Order
-		boolean respuesta = metodosHO.consumirPredicate(cadena -> cadena.endsWith("s"), "Andres");//comparamos la cadena que contenga z con "el string"
+		boolean respuesta = metodosHO.consumirPredicate(cadena -> cadena.endsWith("s"), "Andres");
 		log.info("High Order: La cadena termina con s: " + respuesta);
-		
+		//JAVA
+		log.info("JAVA Predicate "); 
+		//si contiene el nombre en la lista imprime, caso contrario no imprime nada
+		Stream <String> nuevaLista = listaNombre.stream().filter(numero-> listaNombre.contains("Mike")); //si contiene el nombre en la lista imprime 
+		nuevaLista.forEach(nombre->System.out.println(nombre));
 	
 		
 	//FUNCTION
@@ -85,7 +101,18 @@ public class MainInterfacesFuncionalesTarea33 {
 			return retorn;
 		}, 430.0);
 		log.info("High Order: " + valorfinalHO );
-	
+		//JAVA
+		log.info("JAVA function:");
+		Stream<Boolean>listaCambiada= listaNombre.stream().map(nombreListaf -> {
+			
+			Boolean cadena = nombreListaf.contains("Mike");
+			
+			
+			return cadena;
+		});
+		listaCambiada.forEach(valorf->System.out.println(valorf));
+		
+		
 		
 	//UNARY OPERATOR (FUNCTION)
 		//CLases 

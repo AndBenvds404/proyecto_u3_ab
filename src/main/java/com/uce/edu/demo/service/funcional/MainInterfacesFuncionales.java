@@ -87,7 +87,7 @@ public class MainInterfacesFuncionales {
 		log.info("HO Predicate:" + respuesta);
 		
 		//JAVA
-		log.info("JAVA supplier "); 
+		log.info("JAVA Predicate "); 
 		Stream <Integer> nuevaLista = listaNumero.stream().filter(numero-> prueba()); //-> cualquier cosa (true - guarda / false - no guarda)
 		nuevaLista.forEach(numero->System.out.println(numero));
 	
@@ -118,7 +118,7 @@ public class MainInterfacesFuncionales {
 			String cadena = "num: "+valor.toString();
 			return cadena;
 		});
-		//listaCambiada.forEach(valorf->System.out.println(valorf));
+	//	listaCambiada.forEach(valorf->System.out.println(valorf));
 		listaCambiada.forEach(valorf-> imprimir(valorf));
 		
 		
